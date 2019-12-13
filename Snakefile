@@ -220,12 +220,12 @@ rule kmer_trim_reads:
     output: 
         SCRATCHDIR + "/abundtrim/{study}/{sample}.abundtrim.fastq.gz"
     conda: 
-        "envs/sourmash.yaml"
+        "envs/trim_low_abund.yaml"
     log:
-         OUTPUTDIR +  "/logs/sourmash/{study}/sourmash_{sample}.log"
+         OUTPUTDIR +  "/logs/abundtrim/trim_low_abund_{sample}.log"
     shell: 
         """
-        interleave-reads.py {input} | trim-low-abund.py --gzip -C 3 -Z 18 -M 30e9 -V - -o {output}
+        interleave-reads.py {input} | trim-low-abund.py --gzip -C 3 -Z 18 -M 30e9 -V - -o {output} 2> {log} 
         """
 
 rule compute_sigs:
@@ -402,4 +402,19 @@ rule prodigal:
     shell:
         """
         prodigal -i {input.assembly} -f gff -o {output.genes} -a {output.proteins} -p meta
+        """
+
+rule spacegraphcats_queries_euk:
+    input:
+        conf = "inputs/conf/{sample}_conf.yml",  
+        reads = SCRATCHDIR + "/abundtrim/{study}/{sample}.abundtrim.fastq.gz",
+        bins = ["outputs/metabat2/MS-all-SRF-5-20.00_bin.93.fa",
+                "outputs/metabat2/MS-all-SRF-5-20.00_bin.9.fa",
+    output: directory("{sample}_k31_r1_search_oh0")
+    conda:
+        "envs/spacegraphcats.yaml"
+    shell:
+        """
+        python -m spacegraphcats {input.conf} extract_contigs extract_reads --nolock
+        mv
         """
