@@ -1,0 +1,27 @@
+catlas_base: ERR538178
+input_sequences:
+- /vortexfs1/scratch/halexander/tara/abundtrim/PRJEB4352/ERR538178.abundtrim.fastq.gz
+ksize: 31
+radius: 1
+search:
+- outputs/metabat2/MS-all-SRF-5-20.00_bin.93.fa
+- outputs/metabat2/MS-all-SRF-5-20.00_bin.9.fa
+- outputs/metabat2/MS-all-SRF-5-20.00_bin.56.fa
+- outputs/metabat2/MS-all-SRF-5-20.00_bin.96.fa
+- outputs/metabat2/MS-all-SRF-5-20.00_bin.24.fa
+- outputs/metabat2/MS-all-SRF-5-20.00_bin.50.fa
+- outputs/metabat2/MS-all-SRF-5-20.00_bin.65.fa
+- outputs/metabat2/MS-all-SRF-5-20.00_bin.12.fa
+- outputs/metabat2/MS-all-SRF-5-20.00_bin.59.fa
+- outputs/metabat2/MS-all-SRF-5-20.00_bin.101.fa
+searchquick:
+- outputs/metabat2/MS-all-SRF-5-20.00_bin.93.fa
+- outputs/metabat2/MS-all-SRF-5-20.00_bin.9.fa
+- outputs/metabat2/MS-all-SRF-5-20.00_bin.56.fa
+- outputs/metabat2/MS-all-SRF-5-20.00_bin.96.fa
+- outputs/metabat2/MS-all-SRF-5-20.00_bin.24.fa
+- outputs/metabat2/MS-all-SRF-5-20.00_bin.50.fa
+- outputs/metabat2/MS-all-SRF-5-20.00_bin.65.fa
+- outputs/metabat2/MS-all-SRF-5-20.00_bin.12.fa
+- outputs/metabat2/MS-all-SRF-5-20.00_bin.59.fa
+- outputs/metabat2/MS-all-SRF-5-20.00_bin.101.fa
