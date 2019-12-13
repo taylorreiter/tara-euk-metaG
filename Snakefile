@@ -99,6 +99,9 @@ rule all:
         #TRIM DATA
         trimmedDataG = expand("{base}/trimmed/{study}/{sample}_{num}.trimmed.fastq.gz", base = SCRATCHDIR, study = METAG_ACCESSION, sample=metaG_run_accession, num = [1,2]), 
         trimmedDataT = expand("{base}/trimmed/{study}/{sample}_{num}.trimmed.fastq.gz", base = SCRATCHDIR, study = METAT_ACCESSION, sample=metaT_run_accession, num = [1,2]), 
+        #K-MER TRIMMED DATA
+        kmerTrimmedDataG = expand("{base}/abundtrim/{study}/{sample}.abundtrim.fastq.gz", base = SCRATCHDIR, study = METAG_ACCESSION, sample=metaG_run_accession), 
+        
 
         #CALCULATE SOURMASH
         signatureG = expand("{base}/sourmash/{study}/{sample}.10k.sig", base = SCRATCHDIR, study = METAG_ACCESSION, sample = metaG_run_accession),
@@ -209,6 +212,21 @@ rule multiqc:
         mv multiqc_data/multiqc_general_stats.txt {output.stats_trimmedT} 
         rm -rf multiqc_data
         """ 
+
+rule kmer_trim_reads:
+    input:
+        r1 = SCRATCHDIR + "/trimmed/{study}/{sample}_1.trimmed.fastq.gz",
+        r2 = SCRATCHDIR + "/trimmed/{study}/{sample}_2.trimmed.fastq.gz" 
+    output: 
+        SCRATCHDIR + "/abundtrim/{study}/{sample}.abundtrim.fastq.gz"
+    conda: 
+        "envs/sourmash.yaml"
+    log:
+         OUTPUTDIR +  "/logs/sourmash/{study}/sourmash_{sample}.log"
+    shell: 
+        """
+        interleave-reads.py {input} | trim-low-abund.py --gzip -C 3 -Z 18 -M 30e9 -V - -o {output}
+        """
 
 rule compute_sigs:
     input:
